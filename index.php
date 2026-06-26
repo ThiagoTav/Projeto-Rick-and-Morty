@@ -2,6 +2,13 @@
 session_start();
 require_once 'includes/config.php';
 require_once 'includes/database.php';
+require_once 'includes/auth.php';
+
+if (isset($_GET['action']) && $_GET['action'] === 'logout') {
+    logout_user();
+    header('Location: index.php?page=login');
+    exit;
+}
 
 $page = $_GET['page'] ?? 'home';
 
