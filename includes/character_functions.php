@@ -49,6 +49,12 @@ function update_character(int $id, string $name, string $species, string $image,
     ]);
 }
 
+function get_all_characters(): array
+{
+    $db = get_db();
+    return $db->query("SELECT * FROM characters ORDER BY created_at DESC")->fetchAll();
+}
+
 function delete_character(int $id): bool
 {
     $db   = get_db();
