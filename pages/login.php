@@ -4,12 +4,18 @@ if (is_logged_in()) {
     exit;
 }
 
-$error = '';
-$flash = '';
+$error   = '';
+$flash   = '';
+$warning = '';
 
 if (isset($_SESSION['flash_success'])) {
     $flash = $_SESSION['flash_success'];
     unset($_SESSION['flash_success']);
+}
+
+if (isset($_SESSION['flash_warning'])) {
+    $warning = $_SESSION['flash_warning'];
+    unset($_SESSION['flash_warning']);
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -34,6 +40,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                 <?php if ($flash): ?>
                     <div class="alert alert-success"><?= htmlspecialchars($flash) ?></div>
+                <?php endif; ?>
+
+                <?php if ($warning): ?>
+                    <div class="alert alert-warning"><?= htmlspecialchars($warning) ?></div>
                 <?php endif; ?>
 
                 <?php if ($error): ?>
