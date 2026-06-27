@@ -5,7 +5,7 @@ require_once 'includes/database.php';
 require_once 'includes/auth.php';
 require_once 'includes/character_functions.php';
 
-if (isset($_GET['action']) && $_GET['action'] === 'logout') {
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['action'] ?? '') === 'logout') {
     logout_user();
     header('Location: index.php?page=login');
     exit;

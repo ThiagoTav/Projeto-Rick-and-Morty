@@ -80,7 +80,10 @@
                 </li>
                 <li class="nav-item">
                     <?php if (isset($_SESSION['user_id'])): ?>
-                        <a class="nav-link <?= ($page === 'login') ? 'active' : '' ?>" href="index.php?action=logout">Sair</a>
+                        <form method="POST" action="index.php" class="d-inline">
+                            <input type="hidden" name="action" value="logout">
+                            <button type="submit" class="nav-link border-0 bg-transparent">Sair</button>
+                        </form>
                     <?php else: ?>
                         <a class="nav-link <?= ($page === 'login' || $page === 'register') ? 'active' : '' ?>" href="index.php?page=login">Login / Cadastro</a>
                     <?php endif; ?>
