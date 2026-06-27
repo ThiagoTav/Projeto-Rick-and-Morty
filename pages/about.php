@@ -106,7 +106,7 @@
                         <div class="card border-0 bg-light p-3 h-100">
                             <h6 class="fw-semibold">Tela de Login</h6>
                             <p class="text-muted small mb-2">React Native + JWT. Autenticação, validação e persistência de sessão com integração ao backend REST.</p>
-                            <a href="https://github.com/ThiagoTav/login-app" target="_blank"
+                            <a href="https://github.com/ThiagoTav/SistemaDeLogin" target="_blank"
                                class="small text-decoration-none text-app">Ver no GitHub &rarr;</a>
                         </div>
                     </div>
