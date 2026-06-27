@@ -3,6 +3,7 @@ session_start();
 require_once 'includes/config.php';
 require_once 'includes/database.php';
 require_once 'includes/auth.php';
+require_once 'includes/character_functions.php';
 
 if (isset($_GET['action']) && $_GET['action'] === 'logout') {
     logout_user();
