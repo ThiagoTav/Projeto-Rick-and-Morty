@@ -5,6 +5,12 @@ if (is_logged_in()) {
 }
 
 $error = '';
+$flash = '';
+
+if (isset($_SESSION['flash_success'])) {
+    $flash = $_SESSION['flash_success'];
+    unset($_SESSION['flash_success']);
+}
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $email    = trim($_POST['email'] ?? '');
@@ -26,6 +32,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <div class="col-md-8">
             <div class="card border-0 shadow-sm p-4 mt-2">
 
+                <?php if ($flash): ?>
+                    <div class="alert alert-success"><?= htmlspecialchars($flash) ?></div>
+                <?php endif; ?>
+
                 <?php if ($error): ?>
                     <div class="alert alert-danger"><?= htmlspecialchars($error) ?></div>
                 <?php endif; ?>
@@ -44,13 +54,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     </div>
 
                     <div class="mb-3">
-                        <input
-                            type="password"
-                            name="password"
-                            class="form-control"
-                            placeholder="Senha"
-                            required
-                        >
+                        <div class="input-group">
+                            <input
+                                type="password"
+                                name="password"
+                                id="input-password"
+                                class="form-control"
+                                placeholder="Senha"
+                                required
+                            >
+                            <button class="btn btn-outline-secondary" type="button" id="toggle-password" tabindex="-1">
+                                <i class="bi bi-eye" id="icon-password"></i>
+                            </button>
+                        </div>
                     </div>
 
                     <div class="d-flex justify-content-end">
@@ -71,3 +87,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </div>
     </div>
 </div>
+
+<script>
+    document.getElementById('toggle-password').addEventListener('click', () => {
+        const input = document.getElementById('input-password');
+        const icon  = document.getElementById('icon-password');
+        const isHidden = input.type === 'password';
+        input.type = isHidden ? 'text' : 'password';
+        icon.className = isHidden ? 'bi bi-eye-slash' : 'bi bi-eye';
+    });
+</script>
