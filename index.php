@@ -20,7 +20,7 @@ $page = $_GET['page'] ?? 'home';
 
 // Whitelist de páginas permitidas — sem isso alguém poderia passar qualquer coisa na URL
 // e o require_once lá embaixo carregaria um arquivo arbitrário do servidor
-$allowed_pages = ['home', 'characters', 'character_detail', 'about', 'login', 'register'];
+$allowed_pages = ['home', 'characters', 'character_detail', 'about', 'login', 'register', 'profile'];
 
 if (!in_array($page, $allowed_pages)) {
     $page = 'home';
