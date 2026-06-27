@@ -113,7 +113,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     </div>
 
                     <div class="d-flex justify-content-end">
-                        <button type="submit" class="btn px-5 text-white" style="background-color: #3b5998;">
+                        <button type="submit" class="btn px-5 btn-app">
                             Cadastrar
                         </button>
                     </div>

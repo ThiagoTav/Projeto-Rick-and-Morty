@@ -4,7 +4,7 @@
     <?php if (empty($characters)): ?>
         <div class="text-center py-5 text-muted">
             <p>Nenhum personagem salvo ainda.</p>
-            <a href="index.php?page=home" class="btn text-white" style="background-color: #3b5998;">
+            <a href="index.php?page=home" class="btn btn-app">
                 Explorar personagens
             </a>
         </div>
