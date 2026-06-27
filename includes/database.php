@@ -40,6 +40,14 @@ function create_tables(PDO $pdo): void
         )
     ");
 
+    // SQLite não suporta ADD COLUMN IF NOT EXISTS, então verifico via PRAGMA
+    // se a coluna já existe antes de tentar adicionar — evita erro em bancos antigos
+    $columns = $pdo->query("PRAGMA table_info(users)")->fetchAll();
+    $columnNames = array_column($columns, 'name');
+    if (!in_array('profile_image', $columnNames)) {
+        $pdo->exec("ALTER TABLE users ADD COLUMN profile_image TEXT");
+    }
+
     $pdo->exec("
         CREATE TABLE IF NOT EXISTS characters (
             id         INTEGER PRIMARY KEY AUTOINCREMENT,

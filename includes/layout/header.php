@@ -21,6 +21,7 @@
             background-color: #ffffff;
             border-radius: 50%;
             display: inline-block;
+            object-fit: cover;
         }
 
         .navbar-custom .nav-link {
@@ -60,14 +61,61 @@
             background-color: #a8b8d8;
             color: #2c3e6b;
         }
+
+        .navbar-brand-text {
+            color: #dfe3ee;
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+
+        .logo-circle-initial {
+            color: #3b5998;
+            font-size: 1rem;
+        }
+
+        .selected-card {
+            outline: 3px solid #3b5998;
+            border-radius: 8px;
+        }
+
+        .selected-badge {
+            position: absolute;
+            top: 6px;
+            right: 6px;
+            background: #3b5998;
+            color: white;
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
+            font-weight: bold;
+        }
     </style>
 </head>
 <body>
 
 <nav class="navbar navbar-expand-lg navbar-custom py-2">
     <div class="container-fluid px-4">
-        <a class="navbar-brand" href="index.php">
-            <span class="logo-circle"></span>
+        <a class="navbar-brand d-flex align-items-center gap-2"
+           href="<?= is_logged_in() ? 'index.php?page=profile' : 'index.php' ?>">
+            <?php if (is_logged_in() && !empty($_SESSION['user_profile_image'])): ?>
+                <img src="<?= htmlspecialchars($_SESSION['user_profile_image']) ?>"
+                     class="logo-circle">
+            <?php elseif (is_logged_in()): ?>
+                <span class="logo-circle d-flex align-items-center justify-content-center fw-bold logo-circle-initial">
+                    <?= htmlspecialchars(strtoupper(substr($_SESSION['user_name'], 0, 1))) ?>
+                </span>
+            <?php else: ?>
+                <span class="logo-circle"></span>
+            <?php endif; ?>
+            <?php if (is_logged_in()): ?>
+                <span class="navbar-brand-text">
+                    Olá, <?= htmlspecialchars($_SESSION['user_name']) ?>
+                </span>
+            <?php endif; ?>
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
             <span class="navbar-toggler-icon"></span>
@@ -83,16 +131,18 @@
                 <li class="nav-item">
                     <a class="nav-link <?= ($page === 'about') ? 'active' : '' ?>" href="index.php?page=about">Sobre</a>
                 </li>
+                <?php if (isset($_SESSION['user_id'])): ?>
                 <li class="nav-item">
-                    <?php if (isset($_SESSION['user_id'])): ?>
-                        <form method="POST" action="index.php" class="d-inline">
-                            <input type="hidden" name="action" value="logout">
-                            <button type="submit" class="nav-link border-0 bg-transparent">Sair</button>
-                        </form>
-                    <?php else: ?>
-                        <a class="nav-link <?= ($page === 'login' || $page === 'register') ? 'active' : '' ?>" href="index.php?page=login">Login / Cadastro</a>
-                    <?php endif; ?>
+                    <form method="POST" action="index.php" class="d-inline">
+                        <input type="hidden" name="action" value="logout">
+                        <button type="submit" class="nav-link border-0 bg-transparent">Sair</button>
+                    </form>
                 </li>
+                <?php else: ?>
+                <li class="nav-item">
+                    <a class="nav-link <?= ($page === 'login' || $page === 'register') ? 'active' : '' ?>" href="index.php?page=login">Login / Cadastro</a>
+                </li>
+                <?php endif; ?>
             </ul>
         </div>
     </div>

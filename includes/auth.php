@@ -37,10 +37,11 @@ function login_user(string $email, string $password): bool
     // password_verify compara a senha digitada com o hash salvo no banco.
     // Não tem como reverter o hash — ele só verifica se os dois batem.
     if ($user && password_verify($password, $user['password'])) {
-        // Salvo o id e o nome na sessão para não precisar ir ao banco
-        // em toda requisição só para saber quem está logado
-        $_SESSION['user_id']   = $user['id'];
-        $_SESSION['user_name'] = $user['name'];
+        // Salvo id, nome e avatar na sessão para não precisar ir ao banco
+        // em toda requisição só para saber quem está logado e qual é o avatar
+        $_SESSION['user_id']            = $user['id'];
+        $_SESSION['user_name']          = $user['name'];
+        $_SESSION['user_profile_image'] = $user['profile_image'] ?? null;
         return true;
     }
 
@@ -58,4 +59,18 @@ function is_logged_in(): bool
 {
     // Se user_id existe na sessão, significa que o login_user() foi bem-sucedido
     return isset($_SESSION['user_id']);
+}
+
+function update_profile_image(int $user_id, string $image): bool
+{
+    $db   = get_db();
+    $stmt = $db->prepare("UPDATE users SET profile_image = :image WHERE id = :id");
+    $result = $stmt->execute([':image' => $image, ':id' => $user_id]);
+
+    // Atualizo a sessão também para refletir imediatamente na navbar sem precisar fazer logout
+    if ($result) {
+        $_SESSION['user_profile_image'] = $image;
+    }
+
+    return $result;
 }
