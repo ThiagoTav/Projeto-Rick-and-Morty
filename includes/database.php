@@ -2,12 +2,22 @@
 
 function get_db(): PDO
 {
+    // O static faz a variável persistir entre chamadas na mesma requisição.
+    // Sem isso, cada função que chama get_db() abriria uma nova conexão com o banco,
+    // o que é desnecessário e mais pesado. Assim a conexão é criada uma vez só.
     static $pdo = null;
 
     if ($pdo === null) {
         $pdo = new PDO('sqlite:' . DB_PATH);
+
+        // ERRMODE_EXCEPTION faz o PDO lançar exceções em vez de retornar false silenciosamente.
+        // Prefiro assim porque fica muito mais fácil identificar quando uma query deu errado.
         $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+        // FETCH_ASSOC retorna os resultados como array associativo (ex: $row['name'])
+        // em vez de array numérico (ex: $row[0]). Muito mais legível.
         $pdo->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
+
         create_tables($pdo);
     }
 
@@ -16,6 +26,9 @@ function get_db(): PDO
 
 function create_tables(PDO $pdo): void
 {
+    // IF NOT EXISTS garante que as tabelas só são criadas se ainda não existirem.
+    // Assim não preciso me preocupar em rodar isso na primeira vez manualmente —
+    // o próprio sistema cria o banco sozinho quando acessado pela primeira vez.
     $pdo->exec("
         CREATE TABLE IF NOT EXISTS users (
             id        INTEGER PRIMARY KEY AUTOINCREMENT,

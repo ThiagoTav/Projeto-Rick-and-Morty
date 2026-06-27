@@ -1,4 +1,6 @@
 <?php
+// O parâmetro "from" indica de onde o usuário veio: "home" (API) ou "characters" (banco local).
+// Isso muda completamente o comportamento da página — por isso preciso saber logo no início.
 $from    = $_GET['from'] ?? 'home';
 $id      = (int)($_GET['id'] ?? 0);
 $editing = isset($_GET['edit']) && $_GET['edit'] === '1';
@@ -8,9 +10,14 @@ if ($id <= 0) {
     exit;
 }
 
+// Processo o POST antes de renderizar qualquer HTML.
+// Assim evito o problema de "headers already sent" que acontece
+// se eu tentar fazer redirect depois de já ter imprimido algo na tela.
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $action = $_POST['action'] ?? '';
 
+    // Qualquer ação de escrita (salvar, editar, excluir) exige login.
+    // Se não estiver logado, mando para o login e paro aqui.
     if (!is_logged_in()) {
         header('Location: index.php?page=login');
         exit;
@@ -50,7 +57,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 <?php if ($from === 'home'): ?>
 
-    <?php $saved = get_character_by_api_id($id); ?>
+    <?php
+    // Verifico no banco se esse personagem já foi salvo pelo usuário.
+    // O resultado disso define quais botões aparecem: Salvar (se não salvou) ou Editar/Excluir (se já salvou).
+    $saved = get_character_by_api_id($id);
+    ?>
 
     <?php if ($editing && $saved): ?>
 
@@ -99,6 +110,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <div class="card border-0 shadow-sm p-4 mt-2">
                 <div class="row align-items-center">
                     <div class="col-md-4 text-center">
+                        <!-- Placeholder cinza enquanto a imagem carrega via JS -->
                         <div id="char-image-wrapper">
                             <div class="rounded-circle bg-secondary d-inline-block" style="width: 250px; height: 250px;"></div>
                         </div>
@@ -118,6 +130,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                     <button type="submit" class="btn btn-danger">Excluir</button>
                                 </form>
                             <?php else: ?>
+                                <!-- Os inputs hidden são preenchidos pelo fetch() abaixo.
+                                     Assim quando o usuário clicar em Salvar, o PHP recebe os dados corretos do personagem. -->
                                 <form method="POST" action="index.php?page=character_detail&id=<?= $id ?>&from=home" id="save-form">
                                     <input type="hidden" name="action" value="save">
                                     <input type="hidden" name="api_id" id="input-api-id">
@@ -135,6 +149,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </div>
 
         <script>
+            // Busco os dados do personagem direto na API usando o id que veio pela URL.
+            // Faço isso no cliente (JS) para não precisar de uma chamada server-side em PHP,
+            // o que exigiria curl ou extensões extras.
             fetch('https://rickandmortyapi.com/api/character/<?= $id ?>')
                 .then(response => {
                     if (!response.ok) throw new Error('Personagem não encontrado.');
@@ -171,6 +188,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         </div>
                     `;
 
+                    // Preencho os inputs hidden com os dados que vieram da API
+                    // para que o formulário de salvar tenha as informações certas ao ser submetido
                     const apiIdInput = document.getElementById('input-api-id');
                     if (apiIdInput) {
                         apiIdInput.value = character.id;
@@ -191,6 +210,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <?php else: ?>
 
     <?php
+    // Se veio da página de personagens salvos, busco os dados do banco local em vez da API.
+    // O id aqui é o id do banco (AUTOINCREMENT), não o id da API.
     $character = get_character_by_id($id);
 
     if (!$character) {
