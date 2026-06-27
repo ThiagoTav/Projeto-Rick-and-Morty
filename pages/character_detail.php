@@ -85,7 +85,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             </div>
                             <div class="d-flex justify-content-end gap-2 mt-2">
                                 <a href="index.php?page=character_detail&id=<?= $id ?>&from=home" class="btn btn-outline-secondary">Cancelar</a>
-                                <button type="submit" class="btn text-white px-4" style="background-color: #3b5998;">Salvar alterações</button>
+                                <button type="submit" class="btn px-4 btn-app">Salvar alterações</button>
                             </div>
                         </div>
                     </div>
@@ -125,7 +125,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                     <input type="hidden" name="species" id="input-species">
                                     <input type="hidden" name="image" id="input-image">
                                     <input type="hidden" name="url" id="input-url">
-                                    <button type="submit" class="btn text-white px-5" style="background-color: #3b5998;">Salvar</button>
+                                    <button type="submit" class="btn px-5 btn-app">Salvar</button>
                                 </form>
                             <?php endif; ?>
                         </div>
@@ -233,7 +233,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             </div>
                             <div class="d-flex justify-content-end gap-2 mt-2">
                                 <a href="index.php?page=character_detail&id=<?= $id ?>&from=characters" class="btn btn-outline-secondary">Cancelar</a>
-                                <button type="submit" class="btn text-white px-4" style="background-color: #3b5998;">Salvar alterações</button>
+                                <button type="submit" class="btn px-4 btn-app">Salvar alterações</button>
                             </div>
                         </div>
                     </div>

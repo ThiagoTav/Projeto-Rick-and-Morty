@@ -37,6 +37,24 @@
             background-color: #5b7ec9;
             color: #ffffff !important;
         }
+
+        .btn-app {
+            background-color: #3b5998;
+            color: #ffffff;
+        }
+
+        .btn-app:hover {
+            background-color: #2d4373;
+            color: #ffffff;
+        }
+
+        .text-app {
+            color: #3b5998;
+        }
+
+        .border-app {
+            border-color: #3b5998 !important;
+        }
     </style>
 </head>
 <body>
