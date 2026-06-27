@@ -27,6 +27,7 @@ function create_tables(PDO $pdo): void
     $pdo->exec("
         CREATE TABLE IF NOT EXISTS characters (
             id         INTEGER PRIMARY KEY AUTOINCREMENT,
+            api_id     INTEGER,
             name       TEXT    NOT NULL,
             species    TEXT    NOT NULL,
             image      TEXT    NOT NULL,
