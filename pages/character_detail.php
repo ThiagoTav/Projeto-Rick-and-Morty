@@ -17,8 +17,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $action = $_POST['action'] ?? '';
 
     // Qualquer ação de escrita (salvar, editar, excluir) exige login.
-    // Se não estiver logado, mando para o login e paro aqui.
+    // Se não estiver logado, aviso o usuário e mando para o login.
     if (!is_logged_in()) {
+        $_SESSION['flash_warning'] = 'Você precisa estar logado para realizar esta ação.';
         header('Location: index.php?page=login');
         exit;
     }
