@@ -17,7 +17,7 @@
                             <img src="<?= htmlspecialchars($character['image']) ?>"
                                  class="card-img-top"
                                  alt="<?= htmlspecialchars($character['name']) ?>">
-                            <div class="card-footer text-center fw-semibold py-2" style="background-color: #a8b8d8; color: #2c3e6b;">
+                            <div class="card-footer-app text-center fw-semibold py-2">
                                 <?= htmlspecialchars($character['name']) ?>
                             </div>
                         </div>

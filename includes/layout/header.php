@@ -55,6 +55,11 @@
         .border-app {
             border-color: #3b5998 !important;
         }
+
+        .card-footer-app {
+            background-color: #a8b8d8;
+            color: #2c3e6b;
+        }
     </style>
 </head>
 <body>

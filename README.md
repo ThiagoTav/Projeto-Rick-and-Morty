@@ -10,6 +10,16 @@ Aplicação web desenvolvida em PHP puro que consome a API do [Rick and Morty](h
 - **Bootstrap 5** — estilização e responsividade do front-end
 - **JavaScript com Fetch API** — requisições assíncronas para a API do Rick and Morty
 
+## Funcionalidades
+
+- **Listagem de personagens** — consome a API do Rick and Morty com paginação, exibindo os personagens em cards com foto e nome
+- **Detalhes do personagem** — ao clicar em um card, exibe nome, espécie, gênero, localização e imagem do personagem
+- **Salvar favoritos** — usuários autenticados podem salvar personagens no banco local; não autenticados são redirecionados para o login
+- **Editar e excluir** — personagens salvos podem ser editados ou excluídos diretamente pela página de detalhes
+- **Autenticação completa** — cadastro e login com sessão PHP; senha armazenada com hash seguro (`password_hash`)
+- **Validação de formulários** — validação em tempo real no front-end (JavaScript) e validação server-side no PHP como camada de segurança
+- **Página Sobre** — mini currículo do desenvolvedor com foto, experiência, projetos, habilidades e contato
+
 ## Pré-requisitos
 
 - PHP 8.5 instalado ([php.net](https://www.php.net/downloads))
@@ -41,16 +51,20 @@ Acesse no navegador: [http://localhost:8000](http://localhost:8000)
 ├── includes/
 │   ├── config.php             # Constantes globais (caminho do banco, URL base)
 │   ├── database.php           # Conexão PDO com SQLite e criação das tabelas
+│   ├── auth.php               # Funções de autenticação (registro, login, logout)
+│   ├── character_functions.php # CRUD de personagens no banco local
 │   └── layout/
-│       ├── header.php         # Navbar compartilhada entre todas as páginas
+│       ├── header.php         # Navbar e estilos compartilhados entre todas as páginas
 │       └── footer.php         # Fechamento do HTML compartilhado
 ├── pages/
 │   ├── home.php               # Listagem de personagens via API
 │   ├── characters.php         # Personagens salvos no banco local
-│   ├── character_detail.php   # Detalhes de um personagem
+│   ├── character_detail.php   # Detalhes, edição e exclusão de um personagem
 │   ├── about.php              # Página sobre o desenvolvedor
 │   ├── login.php              # Tela de login
-│   └── register.php           # Tela de cadastro
+│   └── register.php           # Tela de cadastro com validação em tempo real
+├── assets/
+│   └── profile.jpg            # Foto do desenvolvedor
 └── db/
     └── database.sqlite        # Gerado automaticamente (ignorado pelo git)
 ```
