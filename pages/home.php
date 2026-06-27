@@ -37,7 +37,7 @@
                 <a href="index.php?page=character_detail&id=${character.id}&from=home" class="text-decoration-none">
                     <div class="card border-0 shadow-sm h-100">
                         <img src="${character.image}" class="card-img-top" alt="${character.name}">
-                        <div class="card-footer text-center fw-semibold py-2" style="background-color: #a8b8d8; color: #2c3e6b;">
+                        <div class="card-footer-app text-center fw-semibold py-2">
                             ${character.name}
                         </div>
                     </div>
