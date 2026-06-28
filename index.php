@@ -1,5 +1,8 @@
 <?php
 // Ponto de entrada da aplicação. Toda requisição passa por aqui antes de chegar em qualquer página.
+// ob_start() ativa o buffer de saída — o PHP guarda todo o HTML em memória antes de enviar.
+// Isso permite que qualquer página filha faça header() redirect mesmo depois do header.php já ter rodado.
+ob_start();
 session_start();
 
 // Carrego as dependências principais uma vez só aqui, assim todas as páginas já têm acesso a tudo
