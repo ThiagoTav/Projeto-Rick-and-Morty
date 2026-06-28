@@ -14,10 +14,11 @@ Aplicação web desenvolvida em PHP puro que consome a API do [Rick and Morty](h
 
 - **Listagem de personagens** — consome a API do Rick and Morty com paginação, exibindo os personagens em cards com foto e nome
 - **Detalhes do personagem** — ao clicar em um card, exibe nome, espécie, gênero, localização e imagem do personagem
-- **Salvar favoritos** — usuários autenticados podem salvar personagens no banco local; não autenticados são redirecionados para o login
+- **Salvar favoritos** — usuários autenticados podem salvar personagens no banco local; tentativas sem login exibem uma mensagem explicativa e redirecionam para o login
 - **Editar e excluir** — personagens salvos podem ser editados ou excluídos diretamente pela página de detalhes
 - **Autenticação completa** — cadastro e login com sessão PHP; senha armazenada com hash seguro (`password_hash`)
 - **Validação de formulários** — validação em tempo real no front-end (JavaScript) e validação server-side no PHP como camada de segurança
+- **Avatar de perfil** — usuário autenticado pode escolher um personagem da API como foto de perfil; o avatar selecionado aparece na navbar junto com o nome do usuário
 - **Página Sobre** — mini currículo do desenvolvedor com foto, experiência, projetos, habilidades e contato
 
 ## Pré-requisitos
@@ -62,7 +63,8 @@ Acesse no navegador: [http://localhost:8000](http://localhost:8000)
 │   ├── character_detail.php   # Detalhes, edição e exclusão de um personagem
 │   ├── about.php              # Página sobre o desenvolvedor
 │   ├── login.php              # Tela de login
-│   └── register.php           # Tela de cadastro com validação em tempo real
+│   ├── register.php           # Tela de cadastro com validação em tempo real
+│   └── profile.php            # Perfil do usuário e seleção de avatar
 ├── assets/
 │   └── profile.jpg            # Foto do desenvolvedor
 └── db/
@@ -79,3 +81,4 @@ Acesse no navegador: [http://localhost:8000](http://localhost:8000)
 | Sobre | `/?page=about` | Mini currículo do desenvolvedor |
 | Login | `/?page=login` | Autenticação de usuários |
 | Cadastro | `/?page=register` | Registro de novos usuários |
+| Perfil | `/?page=profile` | Seleção de avatar entre os personagens da API |
