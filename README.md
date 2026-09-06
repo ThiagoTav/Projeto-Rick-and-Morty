@@ -1,5 +1,3 @@
-# Teste Técnico VITAFOR
-
 Aplicação web desenvolvida em PHP puro que consome a API do [Rick and Morty](https://rickandmortyapi.com/), permitindo listar personagens, salvar favoritos localmente e gerenciar usuários com autenticação.
 
 ## Tecnologias utilizadas
